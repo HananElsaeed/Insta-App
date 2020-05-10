@@ -1,0 +1,20 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.hananelsaid.hp.instaapp.MainActivity">
+    <item
+        android:id="@+id/action_profile"
+        android:orderInCategory="100"
+        android:title="@string/profile"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/add_button"
+        android:icon="@drawable/add_icon_white_18dp"
+        app:showAsAction="always"
+        android:title="@string/add" />
+    <item
+        android:id="@+id/logout"
+        android:orderInCategory="100"
+        app:showAsAction="never"
+        android:title="@string/logout" />
+</menu>

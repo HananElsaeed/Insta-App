@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#C783D3"
+    tools:context=".signuppackage.view.SignUpActivity">
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/etemail"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="64dp"
+        android:background="@drawable/btnexittext"
+        android:hint="@string/email"
+        android:inputType="textEmailAddress"
+        android:paddingStart="15dp"
+        android:paddingLeft="15dp"
+        android:textColor="@color/background_offwhite"
+        android:textColorHighlight="@color/background_offwhite"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/etpassword"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="64dp"
+        android:background="@drawable/btnexittext"
+        android:hint="@string/Password"
+        android:inputType="textPassword"
+        android:paddingStart="15dp"
+        android:paddingLeft="15dp"
+        android:textColor="@color/background_offwhite"
+        android:textColorHighlight="@color/background_offwhite"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etemail" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/etconfirmpassword"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginStart="64dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="64dp"
+        android:background="@drawable/btnexittext"
+        android:hint="@string/confirmPassword"
+        android:inputType="textPassword"
+        android:paddingStart="15dp"
+        android:paddingLeft="15dp"
+        android:textColor="@color/background_offwhite"
+        android:textColorHighlight="@color/background_offwhite"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etpassword" />
+
+    <Button
+        android:id="@+id/btnSignUp"
+        android:layout_width="122dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/btnsigninbackground"
+        android:fontFamily="@font/century"
+        android:text="@string/signin"
+        android:textAllCaps="false"
+        android:textColor="@color/signintextcolor"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etconfirmpassword" />
+
+    <TextView
+        android:id="@+id/tvopenLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="64dp"
+        android:layout_marginEnd="64dp"
+        android:layout_marginBottom="60dp"
+        android:fontFamily="@font/century"
+        android:text="@string/txtViewAlreadyRegistered"
+        android:textColor="@color/background_offwhite"
+        android:textSize="25sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
