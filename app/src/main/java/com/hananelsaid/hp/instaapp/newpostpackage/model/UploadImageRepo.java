@@ -26,9 +26,7 @@ public class UploadImageRepo {
 
     private StorageReference storageReference;
     private DatabaseReference databaseReference;
-    private DatabaseReference databaseUsers;
     private FirebaseUser currentUser;
-    // private FirebaseDatabase database;
     private NewPostViewModel newPostViewModel;
 
 
@@ -44,7 +42,6 @@ public class UploadImageRepo {
                 storageReference = FirebaseStorage.getInstance().getReference("Posts_images");
                 databaseReference = FirebaseDatabase.getInstance().getReference("InstaApp");
                 currentUser = FirebaseAuth.getInstance().getCurrentUser();
-                databaseUsers = FirebaseDatabase.getInstance().getReference().child("users").child(currentUser.getUid());
                 final StorageReference imagePath = storageReference.child(child);
 
                 Task<Uri> urlTask = imagePath.putFile(uri).continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
@@ -67,27 +64,11 @@ public class UploadImageRepo {
                             final String downloadURL = downloadUri.toString();
                             Log.i("TAG", downloadURL);
                             final DatabaseReference newPost = databaseReference.child(currentUser.getUid()).push();
+                            newPost.child("Title").setValue(title);
+                            newPost.child("Description").setValue(description);
+                            newPost.child("Image").setValue(downloadURL);
+                            newPost.child("UserId").setValue(currentUser.getUid());
 
-                            databaseUsers.addValueEventListener(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                    newPost.child("Title").setValue(title);
-                                    newPost.child("Description").setValue(description);
-                                    newPost.child("Image").setValue(downloadURL);
-                                    newPost.child("UserId").setValue(currentUser.getUid());
-                                   // for (DataSnapshot dataSnapshot1:dataSnapshot.getChildren()) {
-                                        newPost.child("ProfileImage").setValue(dataSnapshot.child("image").getValue());
-                                        newPost.child("name").setValue(dataSnapshot.child("name").getValue());
-
-
-
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                                }
-                            });
                         } else {
                             // Handle failures
                             // ...
