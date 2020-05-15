@@ -154,7 +154,7 @@ public class Post_Activity extends AppCompatActivity {
 
             selectedImage = data.getData();
             CropImage.activity(selectedImage).setGuidelines(CropImageView.Guidelines.ON)
-                    .setAspectRatio(10, 9).start(this);
+                    .setAspectRatio(10, 10).start(this);
         }
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             CropImage.ActivityResult result = CropImage.getActivityResult(data);

@@ -39,20 +39,18 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_profile) {
             startActivity(new Intent(MainActivity.this, Profile.class));
         }
-        if (id == R.id.add_button) {
-        /*    NavController navController = Navigation.findNavController(MainActivity.this, R.id.nav_host_fragment);
-            navController.navigate(R.id.SecondFragment);*/
-        startActivity(new Intent(MainActivity.this, Post_Activity.class));
-        }
+      /*  if (id == R.id.add_button) {
+        *//*    NavController navController = Navigation.findNavController(MainActivity.this, R.id.nav_host_fragment);
+            navController.navigate(R.id.SecondFragment);*//*
+
+        }*/
         if (id==R.id.logout){
             FirebaseAuth.getInstance().signOut();
             openLoginActivity();

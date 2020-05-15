@@ -48,8 +48,8 @@ public class PostRepo {
 
 
         public static MutableLiveData<ArrayList<Post>> viewPosts() {
-            databaseReference = FirebaseDatabase.getInstance().getReference("InstaApp").child(FirebaseAuth.getInstance().getUid());
-
+            databaseReference = FirebaseDatabase.getInstance().getReference("InstaApp")
+                    .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
             new Thread() {
                 @Override
@@ -61,27 +61,31 @@ public class PostRepo {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
 
-                            postsList.clear();
-                            Post ps;
-                            //Post value1 = dataSnapshot.getValue(Post.class);
-                            for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
-                                if (dataSnapshot1.child("UserId").getValue().toString().equals(FirebaseAuth.getInstance().getCurrentUser().getUid())) {
-                                    String title = dataSnapshot1.child("Title").getValue().toString();
-                                    String description = dataSnapshot1.child("Description").getValue().toString();
-                                    String image = dataSnapshot1.child("Image").getValue().toString();
-                                    //String profileImage = dataSnapshot1.child("ProfileImage").getValue().toString();
-                                    // String userName = dataSnapshot1.child("name").getValue().toString();
 
-                                    //Log.i("TAG", "Value is: " + profileImage);
-                                    ps = new Post(title, description, image);
-                                    // ps=new Post(title,description,userName,profileImage,image);
+                            if (dataSnapshot != null) {
+                                postsList.clear();
+                                Post ps;
+                                for (DataSnapshot dataSnapshot1 : dataSnapshot.getChildren()) {
+                                    Object title1 = dataSnapshot1.child("Title").getValue();
+                                    Object description1 = dataSnapshot1.child("Description").getValue();
+                                    Object image1 = dataSnapshot1.child("Image").getValue();
+                                    if (title1 != null && description1 != null && image1 != null) {
 
-                                    postsList.add(ps);
-                                    Log.i("TAG2", "posts number " + postsList.size());
+                                        String title = title1.toString();
+                                        String description = description1.toString();
+                                        String image = image1.toString();
+
+                                        Log.i("TAG", "Value is: " + title);
+                                        ps = new Post(title, description, image);
+                                        postsList.add(ps);
+                                        Log.i("TAG2", "posts number " + postsList.size());
+
+                                    }
                                 }
+                                Log.i("TAG2", "posts number " + postsList.size());
+                                liveData.setValue(postsList);
                             }
 
-                            liveData.setValue(postsList);
                         }
 
                         @Override
@@ -100,7 +104,6 @@ public class PostRepo {
         public static MutableLiveData<ArrayList<User>> viewuser() {
             databaseUser = FirebaseDatabase.getInstance().getReference("users").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
-
             new Thread() {
                 @Override
                 public void run() {
@@ -110,20 +113,23 @@ public class PostRepo {
                     databaseUser.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
+                            if (dataSnapshot != null) {
+                                usersList.clear();
+                                User user;
+                                Object image = dataSnapshot.child("image").getValue();
+                                Object name = dataSnapshot.child("name").getValue();
+                                if (image != null && name != null) {
+                                    String profileImage = image.toString();
+                                    String userName = name.toString();
+                                    //Log.i("TAG", "Value is: " + profileImage);
+                                    user = new User(userName, profileImage);
+                                    usersList.add(user);
+                                    Log.i("TAG2", "users number " + usersList.size());
 
-                            usersList.clear();
-                            User user;
 
-                            String profileImage = dataSnapshot.child("image").getValue().toString();
-                            String userName = dataSnapshot.child("name").getValue().toString();
-
-                            //Log.i("TAG", "Value is: " + profileImage);
-                            user = new User(userName, profileImage);
-                            usersList.add(user);
-                            Log.i("TAG2", "posts number " + postsList.size());
-
-
-                            liveData2.setValue(usersList);
+                                    liveData2.setValue(usersList);
+                                }
+                            }
                         }
 
                         @Override

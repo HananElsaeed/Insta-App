@@ -1,17 +1,20 @@
 package com.hananelsaid.hp.instaapp.postspackage.view;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 
 import com.hananelsaid.hp.instaapp.R;
+import com.hananelsaid.hp.instaapp.ShowPostImage;
 import com.hananelsaid.hp.instaapp.postspackage.model.Post;
 import com.hananelsaid.hp.instaapp.profilepackage.model.User;
 import com.squareup.picasso.Picasso;
@@ -37,11 +40,28 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull PostHolder holder, int position) {
-        Post post = postlist.get(position);
-        User user = userlist.get(0);
+        final Post post = postlist.get(position);
+        final User user = userlist.get(0);
         holder.tvTitle.setText(post.getTitle());
         holder.tvDescription.setText(post.getDescription());
         holder.tvUserName.setText(user.getName());
+        holder.ivPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, ShowPostImage.class);
+                intent.putExtra("postimageUrl",post.getImageUrl());
+                context.startActivity(intent);
+            }
+        });
+        holder.ivUserProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, ShowPostImage.class);
+                intent.putExtra("profileimageUrl",user.getProfileImageUrl());
+                context.startActivity(intent);
+            }
+        });
+
 
        /*Glide.with(context)
                 .load(post.getImageUrl())

@@ -3,6 +3,7 @@ package com.hananelsaid.hp.instaapp.profilepackage.view;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.Manifest;
@@ -21,7 +22,9 @@ import android.widget.Toast;
 import com.google.android.material.textfield.TextInputEditText;
 import com.hananelsaid.hp.instaapp.MainActivity;
 import com.hananelsaid.hp.instaapp.R;
+import com.hananelsaid.hp.instaapp.profilepackage.model.User;
 import com.hananelsaid.hp.instaapp.profilepackage.viewmodel.ProfileViewModel;
+import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
 import com.theartofdev.edmodo.cropper.CropImageView;
 
@@ -75,6 +78,15 @@ public class Profile extends AppCompatActivity {
                     Profile.this.finish();
                 }
 
+
+            }
+        });
+       profileViewModel.getUserData().observe(Profile.this, new Observer<User>() {
+            @Override
+            public void onChanged(User user) {
+                etName.setText(user.getName());
+                etPhone.setText(user.getPhone());
+                Picasso.get().load(user.getProfileImageUrl()).into(ivPerson);
 
             }
         });

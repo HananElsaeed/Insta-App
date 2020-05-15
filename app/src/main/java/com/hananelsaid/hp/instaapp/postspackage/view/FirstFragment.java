@@ -1,5 +1,6 @@
 package com.hananelsaid.hp.instaapp.postspackage.view;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,12 +16,11 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.StorageReference;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.hananelsaid.hp.instaapp.CheckConnection;
+import com.hananelsaid.hp.instaapp.MainActivity;
 import com.hananelsaid.hp.instaapp.R;
+import com.hananelsaid.hp.instaapp.newpostpackage.view.Post_Activity;
 import com.hananelsaid.hp.instaapp.postspackage.model.Post;
 import com.hananelsaid.hp.instaapp.postspackage.viewmodel.PostViewModel;
 import com.hananelsaid.hp.instaapp.profilepackage.model.User;
@@ -34,7 +34,8 @@ public class FirstFragment extends Fragment {
     //rec
     private PostAdapter adapterClass;
     private RecyclerView postsRecycler;
-    //firebase
+    //views
+    FloatingActionButton floatingActionButton;
 
 
     @Override
@@ -48,29 +49,29 @@ public class FirstFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         postsRecycler = view.findViewById(R.id.postsRecyclerView);
-        //setAdapter();
-       /* view.findViewById(R.id.button_first).setOnClickListener(new View.OnClickListener() {
+        floatingActionButton = view.findViewById(R.id.floatbtn);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                NavHostFragment.findNavController(FirstFragment.this)
-                        .navigate(R.id.action_FirstFragment_to_SecondFragment);
+                startActivity(new Intent(getActivity(), Post_Activity.class));
             }
-        });*/
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        //adapterClass.notifyDataSetChanged();
+        });
 
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        setAdapter();
-        loadPosts();
 
+        setAdapter();
+
+
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        loadPosts();
     }
 
     private void loadPosts() {
@@ -81,8 +82,7 @@ public class FirstFragment extends Fragment {
                 @Override
                 public void onChanged(List<Post> posts) {
                     adapterClass.setData(posts);
-
-
+                 //   Toast.makeText(getActivity(), ""+posts.get(1).getTitle(), Toast.LENGTH_SHORT).show();
                 }
             });
             postViewModel.getUserDataFromFirebase().observe(getActivity(), new Observer<List<User>>() {

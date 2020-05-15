@@ -50,4 +50,5 @@
     <string name="phone">Phone</string>
     <string name="done_button">Done</string>
     <string name="profile">Profile</string>
+    <string name="save">Save</string>
 </resources>
