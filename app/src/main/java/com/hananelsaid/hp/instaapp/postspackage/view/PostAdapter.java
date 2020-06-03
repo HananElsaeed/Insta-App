@@ -2,6 +2,7 @@ package com.hananelsaid.hp.instaapp.postspackage.view;
 
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +14,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.hananelsaid.hp.instaapp.R;
 import com.hananelsaid.hp.instaapp.ShowPostImage;
 import com.hananelsaid.hp.instaapp.postspackage.model.Post;
@@ -20,6 +28,8 @@ import com.hananelsaid.hp.instaapp.profilepackage.model.User;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
+
+import static android.media.CamcorderProfile.get;
 
 public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> {
     private Context context;
@@ -39,7 +49,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PostHolder holder, int position) {
+    public void onBindViewHolder(@NonNull PostHolder holder, final int position) {
         final Post post = postlist.get(position);
         final User user = userlist.get(0);
         holder.tvTitle.setText(post.getTitle());
@@ -49,7 +59,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, ShowPostImage.class);
-                intent.putExtra("postimageUrl",post.getImageUrl());
+                intent.putExtra("postimageUrl", post.getImageUrl());
                 context.startActivity(intent);
             }
         });
@@ -57,8 +67,15 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, ShowPostImage.class);
-                intent.putExtra("profileimageUrl",user.getProfileImageUrl());
+                intent.putExtra("profileimageUrl", user.getProfileImageUrl());
                 context.startActivity(intent);
+            }
+        });
+
+        holder.ivDeletPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                deletePost(position);
             }
         });
 
@@ -66,9 +83,34 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> {
        /*Glide.with(context)
                 .load(post.getImageUrl())
                 .into( holder.ivPost);*/
+        Log.i("TAG", "onBindViewHolder: "+user.getProfileImageUrl());
+        Log.i("TAG", "onBindViewHolder: "+post.getImageUrl());
         Picasso.get().load(post.getImageUrl()).into(holder.ivPost);
         Picasso.get().load(user.getProfileImageUrl()).into(holder.ivUserProfile);
 
+    }
+
+    public void deletePost(int position) {
+
+        Post post = postlist.get(position);
+        String postId = post.getPostId();
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+        Query applesQuery = ref.child("Posts").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                .orderByChild("PostId").equalTo(postId);
+
+        applesQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot appleSnapshot : dataSnapshot.getChildren()) {
+                    appleSnapshot.getRef().removeValue();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.e("TAG", "onCancelled", databaseError.toException());
+            }
+        });
     }
 
     @Override
@@ -94,7 +136,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> {
     class PostHolder extends RecyclerView.ViewHolder {
 
         TextView tvTitle, tvDescription, tvUserName;
-        ImageView ivPost, ivUserProfile;
+        ImageView ivPost, ivUserProfile, ivDeletPost;
 
         public PostHolder(@NonNull View itemView) {
             super(itemView);
@@ -103,6 +145,7 @@ public class PostAdapter extends RecyclerView.Adapter<PostAdapter.PostHolder> {
             tvUserName = itemView.findViewById(R.id.tvUserName);
             ivPost = itemView.findViewById(R.id.ivpost);
             ivUserProfile = itemView.findViewById(R.id.ivUserProfile);
+            ivDeletPost = itemView.findViewById(R.id.ivDeletPost);
 
 
         }

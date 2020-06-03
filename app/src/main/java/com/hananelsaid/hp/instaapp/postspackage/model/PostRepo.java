@@ -48,7 +48,7 @@ public class PostRepo {
 
 
         public static MutableLiveData<ArrayList<Post>> viewPosts() {
-            databaseReference = FirebaseDatabase.getInstance().getReference("InstaApp")
+            databaseReference = FirebaseDatabase.getInstance().getReference("Posts")
                     .child(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
             new Thread() {
@@ -69,14 +69,16 @@ public class PostRepo {
                                     Object title1 = dataSnapshot1.child("Title").getValue();
                                     Object description1 = dataSnapshot1.child("Description").getValue();
                                     Object image1 = dataSnapshot1.child("Image").getValue();
-                                    if (title1 != null && description1 != null && image1 != null) {
+                                    Object postId1 = dataSnapshot1.child("PostId").getValue();
+                                    if (title1 != null && description1 != null && image1 != null && postId1!=null) {
 
                                         String title = title1.toString();
                                         String description = description1.toString();
                                         String image = image1.toString();
+                                        String postId = postId1.toString();
 
-                                        Log.i("TAG", "Value is: " + title);
-                                        ps = new Post(title, description, image);
+                                        Log.i("TAG", "Value is: " + image);
+                                        ps = new Post(title, description, image,postId);
                                         postsList.add(ps);
                                         Log.i("TAG2", "posts number " + postsList.size());
 

@@ -1,17 +1,24 @@
 package com.hananelsaid.hp.instaapp.postspackage.model;
 
 public class Post {
-    private String title,description ,userName,profileImageUrl,imageUrl;
+    private String title, description, userName, profileImageUrl, imageUrl, postId;
 
     public Post() {
     }
 
-    public Post(String title, String description, String userName, String profileImageUrl, String imageUrl) {
+    public Post(String title, String description, String imageUrl, String postId) {
         this.title = title;
         this.description = description;
-        this.userName = userName;
-        this.profileImageUrl = profileImageUrl;
+        this.postId = postId;
         this.imageUrl = imageUrl;
+    }
+
+    public String getPostId() {
+        return postId;
+    }
+
+    public void setPostId(String postId) {
+        this.postId = postId;
     }
 
     public String getUserName() {
@@ -30,11 +37,11 @@ public class Post {
         this.profileImageUrl = profileImageUrl;
     }
 
-    public Post(String title, String description, String imageUrl) {
+/*    public Post(String title, String description, String imageUrl) {
         this.title = title;
         this.description = description;
         this.imageUrl = imageUrl;
-    }
+    }*/
 
     public String getTitle() {
         return title;

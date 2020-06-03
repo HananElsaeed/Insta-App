@@ -40,7 +40,7 @@ public class UploadImageRepo {
             public void run() {
                 super.run();
                 storageReference = FirebaseStorage.getInstance().getReference("Posts_images");
-                databaseReference = FirebaseDatabase.getInstance().getReference("InstaApp");
+                databaseReference = FirebaseDatabase.getInstance().getReference("Posts");
                 currentUser = FirebaseAuth.getInstance().getCurrentUser();
                 final StorageReference imagePath = storageReference.child(child);
 
@@ -62,12 +62,15 @@ public class UploadImageRepo {
                         if (task.isSuccessful()) {
                             Uri downloadUri = task.getResult();
                             final String downloadURL = downloadUri.toString();
+
                             Log.i("TAG", downloadURL);
                             final DatabaseReference newPost = databaseReference.child(currentUser.getUid()).push();
+                            String key = databaseReference.child(FirebaseAuth.getInstance().getCurrentUser().getUid()).child("Posts").push().getKey();
                             newPost.child("Title").setValue(title);
                             newPost.child("Description").setValue(description);
                             newPost.child("Image").setValue(downloadURL);
                             newPost.child("UserId").setValue(currentUser.getUid());
+                            newPost.child("PostId").setValue(key);
 
                         } else {
                             // Handle failures
