@@ -16,9 +16,8 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".ShowPostImage"
-            android:theme="@style/AppTheme.BlackAppBar"
             android:parentActivityName=".MainActivity"
-            ></activity>
+            android:theme="@style/AppTheme.BlackAppBar" />
         <activity android:name=".profilepackage.view.Profile" />
         <activity
             android:name=".SplashActivity"

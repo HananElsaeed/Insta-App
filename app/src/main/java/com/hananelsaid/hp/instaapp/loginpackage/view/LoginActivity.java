@@ -38,7 +38,7 @@ import com.hananelsaid.hp.instaapp.signuppackage.view.SignUpActivity;
 import com.hananelsaid.hp.instaapp.signuppackage.viewmodel.SignUpViewModel;
 
 public class LoginActivity extends AppCompatActivity {
-    private static final int RC_SIGN_IN = 1;
+    private static final int RC_SIGN_IN = 123;
     private static final String TAG = "TAGLoginActivity";
     //views refrences
     TextInputEditText edLoginEmail, edLoginPassword;
@@ -121,6 +121,7 @@ public class LoginActivity extends AppCompatActivity {
     private void signUpWithGoogle() {
         Intent signInIntent = client.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
+
     }
 
     @Override
@@ -129,6 +130,7 @@ public class LoginActivity extends AppCompatActivity {
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
+
             try {
                 // Google Sign In was successful, authenticate with Firebase
                 GoogleSignInAccount account = task.getResult(ApiException.class);

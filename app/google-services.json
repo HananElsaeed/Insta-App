@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "643097701676-pfqqlepf2il4tni41bmqvoh6kb003s4u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hananelsaid.hp.instaapp",
+            "certificate_hash": "040e2bed3eb9e38c8430d6ad17454851e7f4cf02"
+          }
+        },
+        {
           "client_id": "643097701676-v5mfspbamg26l2lkgchlkvtdhrvjhf3l.apps.googleusercontent.com",
           "client_type": 3
         }
